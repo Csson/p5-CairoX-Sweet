@@ -13,6 +13,8 @@ use Cairo;
 class Sweet using Moose {
     
     use CairoX::Sweet::Color;
+    use aliased 'CairoX::Sweet::Core::LineTo';
+    use aliased 'CairoX::Sweet::Core::MoveTo';
     
     has surface_format => (
         is => 'ro',
@@ -79,6 +81,9 @@ class Sweet using Moose {
                 ArrayRef[Num] :$draw = [],
     ){
 
+        if(scalar @$move) {
+            $self->path->add(MoveTo->new(@$move));
+        }
         my $move_to_x = shift @$move if scalar @$move;
         my $move_to_y = shift @$move if scalar @$move;
 
@@ -87,6 +92,9 @@ class Sweet using Moose {
 
             if(scalar @$move) {
                 $self->c->move_to($move_to_x, $move_to_y);
+            }
+            if($method eq 'line_to') {
+                $self->path->add(LineTo->new($draw->[0], $draw->[1]));
             }
 
             DRAW:

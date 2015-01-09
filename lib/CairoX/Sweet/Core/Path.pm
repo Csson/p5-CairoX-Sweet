@@ -9,23 +9,14 @@ use CairoX::Sweet::Standard;
 
 class CairoX::Sweet::Core::Path using Moose {
 
-    foreach my $color (qw/red green blue/) {
-        has $color => (
-            is => 'ro',
-            isa => NumUpToOne,
-            required => 1,
-        );
-    }
-    has opacity => (
-        is => 'ro',
-        default => 1,
-        isa => NumUpToOne,
+    has commands => (
+        is => 'rw',
+        isa => ArrayRef,
+        traits => ['Array'],
+        handles => {
+            add => 'push',
+            all_commands => 'elements',
+        },
     );
     
-    method color {
-        return ($self->red, $self->green, $self->blue);
-    }
-    method color_with_opacity {
-        return ($self->red, $self->green, $self->blue, $self->opacity);
-    }
 }

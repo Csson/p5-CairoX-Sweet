@@ -17,7 +17,8 @@ declares CairoImageSurface,
          ArrayRefNumOfSix,
          Color,
          NumUpToOne,
-         Path
+         Path,
+         Point
 
 {
     use List::AllUtils qw/any zip/;
@@ -27,6 +28,7 @@ declares CairoImageSurface,
 
     class_type Color   => { class => 'CairoX::Sweet::Color' };
     class_type Path    => { class => 'CairoX::Sweet::Core::Path' };
+    class_type Point    => { class => 'CairoX::Sweet::Core::Point' };
 
     declare ArrayRefNumOfTwo, as ArrayRef[Num],
         where { scalar @$_ % 2 == 0 },

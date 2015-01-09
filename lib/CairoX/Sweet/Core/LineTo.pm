@@ -4,10 +4,10 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet::Core::MoveTo
+# PODNAME: CairoX::Sweet::Core::LineTo
 # ABSTRACT: Short intro
 
-class CairoX::Sweet::Core::MoveTo using Moose {
+class CairoX::Sweet::Core::LineTo using Moose {
 
     use CairoX::Sweet::Core::Point;
 
