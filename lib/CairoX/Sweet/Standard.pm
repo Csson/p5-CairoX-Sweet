@@ -2,19 +2,21 @@ use 5.20.0;
 
 # VERSION
 
-package CairoX::Sweet::Standard::Moops {
+package CairoX::Sweet::Standard {
 
     use base 'Moops';
-    use CairoX::Sweet::Types();
+    use Types::CairoX::Sweet();
     use MooseX::StrictConstructor();
+    use List::AllUtils();
 
     sub import {
         my $class = shift;
         my %opts = @_;
 
         push @{ $opts{'imports'} ||= [] } => (
-            'CairoX::Sweet::Types' => [{ replace => 1 }, '-types'],
+            'Types::CairoX::Sweet' => [{ replace => 1 }, '-types'],
             'MooseX::StrictConstructor' => [],
+            'List::AllUtils' => [qw/any zip/],
         );
 
         $class->SUPER::import(%opts);

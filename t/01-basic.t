@@ -4,11 +4,8 @@ use Test::More;
 use if $ENV{'AUTHOR_TESTING'}, 'Test::Warnings';
 
 use CairoX::Sweet;
-use CairoX::Sweet::Color;
 
-# replace with the actual test
 ok 1;
 
-my $color = CairoX::Sweet::Color->new(red => 1, blue => 2, green => 3, opacity => 2);
-
+my $c = CairoX::Sweet->new(200, 100, background => [210, 120, 123]);
 done_testing;

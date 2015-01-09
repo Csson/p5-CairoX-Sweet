@@ -5,17 +5,17 @@ use CairoX::Sweet::Standard;
 
 package CairoX;
 
+use Cairo;
+
 # VERSION
 # ABSTRACT: Short intro
 
 class Sweet using Moose {
     
-    use Cairo;
     
     has surface_format => (
         is => 'ro',
         isa => Str,
-        default => 'argb32',
     );
     has width => (
         is => 'ro',
@@ -29,22 +29,41 @@ class Sweet using Moose {
     );
     has background => (
         is => 'ro',
-        isa => Color,
+        isa => Maybe[Color],
+        predicate => 1,
+        coerce => 1,
     );
-    
-    
-    
+    has context => (
+        is => 'ro',
+        isa => CairoContext,
+    );
     
     has surface => (
         is => 'ro',
-        isa => CairoFormat,
-        lazy => 1,
+        isa => CairoImageSurface,
     );
 
+    around BUILDARGS($orig: $self, Int $width, Int $height, @args) {
+        my %args = @args;
+        $args{'width'} = $width;
+        $args{'height'} = $height;
+        $args{'surface_format'} = 'argb32' if !exists $args{'surface_format'};
+        $args{'surface'} = Cairo::ImageSurface->create($args{'surface_format'}, $args{'width'}, $args{'height'}) if !exists $args{'surface'};
+        $args{'context'} = Cairo::Context->create($args{'surface'}) if !exists $args{'context'};
 
+        $self->$orig(%args);
+    }
 
     method BUILD {
-        my $surface = Cairo::ImageSurface->create
+        if($self->has_background) {
+            $self->context->rectangle(0, 0, $self->width, $self->height);
+            $self->context->set_source_rgb($self->background->color);
+            $self->context->fill;
+        }
+    }
+
+    method line(HashRef $settings, @data) {
+        
     }
 
 }
