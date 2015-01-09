@@ -13,6 +13,7 @@ use Cairo;
 class Sweet using Moose {
     
     use CairoX::Sweet::Color;
+    use CairoX::Sweet::Core::Path;
     use aliased 'CairoX::Sweet::Core::LineTo';
     use aliased 'CairoX::Sweet::Core::MoveTo';
     
@@ -39,6 +40,7 @@ class Sweet using Moose {
     has path => (
         is => 'rw',
         isa => Path,
+        default => sub { CairoX::Sweet::Core::Path->new },
     );
     
     has c => (
@@ -93,12 +95,12 @@ class Sweet using Moose {
             if(scalar @$move) {
                 $self->c->move_to($move_to_x, $move_to_y);
             }
-            if($method eq 'line_to') {
-                $self->path->add(LineTo->new($draw->[0], $draw->[1]));
-            }
 
             DRAW:
             while(scalar @$draw) {
+                if($method eq 'line_to') {
+                    $self->path->add(LineTo->new($draw->[0], $draw->[1]));
+                }
                 $self->c->$method(splice @$draw, 0, $num_per_iteration);
             }
             if($stop) {

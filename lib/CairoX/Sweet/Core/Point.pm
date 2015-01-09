@@ -14,7 +14,7 @@ class CairoX::Sweet::Core::Point using Moose {
         isa => Num,
         required => 1,
     );
-    has x => (
+    has y => (
         is => 'ro',
         isa => Num,
         required => 1,

@@ -16,8 +16,13 @@ class CairoX::Sweet::Core::MoveTo using Moose {
         isa => Point,
         required => 1,
     );
+    has is_relative => (
+        is => 'ro',
+        isa => Bool,
+        required => 1,
+    );
 
-    around BUILDARGS($orig: $self, Num $x, Num $y) {
-        $self->$orig(CairoX::Sweet::Core::Point->new(x => $x, y => $y));
+    around BUILDARGS($orig: $self, Num $x, Num $y, Bool :$is_relative = 0) {
+        $self->$orig(is_relative => $is_relative, point => CairoX::Sweet::Core::Point->new(x => $x, y => $y));
     }
 }
