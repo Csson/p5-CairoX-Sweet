@@ -16,6 +16,7 @@ class CairoX::Sweet::Core::MoveTo using Moose {
         isa => Point,
         required => 1,
     );
+    # default value sets in BUILDARGS
     has is_relative => (
         is => 'ro',
         isa => Bool,
@@ -24,5 +25,11 @@ class CairoX::Sweet::Core::MoveTo using Moose {
 
     around BUILDARGS($orig: $self, Num $x, Num $y, Bool :$is_relative = 0) {
         $self->$orig(is_relative => $is_relative, point => CairoX::Sweet::Core::Point->new(x => $x, y => $y));
+    }
+    method out {
+        return $self->point->out;
+    }
+    method method {
+        return $self->is_relative ? 'rel_move_to' : 'move_to';
     }
 }

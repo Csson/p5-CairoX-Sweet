@@ -8,7 +8,7 @@ use Moops;
 # ABSTRACT:
 library Types::CairoX::Sweet
 
-extends Types::Standard
+extends Types::Standard, Types::TypeTiny
 
 declares CairoImageSurface,
          CairoContext,
@@ -16,6 +16,9 @@ declares CairoImageSurface,
          ArrayRefNumOfFour,
          ArrayRefNumOfSix,
          Color,
+         CurveTo,
+         LineTo,
+         MoveTo,
          NumUpToOne,
          Path,
          Point
@@ -27,7 +30,10 @@ declares CairoImageSurface,
     class_type CairoImageSurface => { class => 'Cairo::ImageSurface' };
 
     class_type Color   => { class => 'CairoX::Sweet::Color' };
-    class_type Path    => { class => 'CairoX::Sweet::Core::Path' };
+    class_type CurveTo    => { class => 'CairoX::Sweet::Core::CurveTo' };
+    class_type LineTo    => { class => 'CairoX::Sweet::Core::LineTo' };
+    class_type MoveTo    => { class => 'CairoX::Sweet::Core::MoveTo' };
+    class_type Path    => { class => 'CairoX::Sweet::Path' };
     class_type Point    => { class => 'CairoX::Sweet::Core::Point' };
 
     declare ArrayRefNumOfTwo, as ArrayRef[Num],
@@ -58,14 +64,14 @@ declares CairoImageSurface,
         };
 
     coerce Color,
-        from Str,       via {
+        from Str, via {
             my $str = $_;
             $str =~ s{^#}{};
             if($str =~ m{^([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$}i) {
                 "CairoX::Sweet::Color"->new(red => (hex $1) / 255, green => (hex $2) / 255, blue => (hex $3) / 255 );
             }
         },
-        from ArrayRef,  via {
+        from ArrayRef, via {
             my @array = @{ $_ };
             if(scalar @array == 3 || scalar @array == 4) {
                 my $opacity = scalar @array == 4 ? pop @array : undef;
@@ -83,6 +89,15 @@ declares CairoImageSurface,
 
                 "CairoX::Sweet::Color"->new(%color);
             }
+        };
+
+    coerce Point,
+        from ArrayRefNumOfTwo, via {
+            "CairoX::Sweet::Core::Point"->new(x => $_->[0], y => $_->[1]);
+        };
+    coerce MoveTo,
+        from ArrayRefNumOfTwo, via {
+            "CairoX::Sweet::Core::MoveTo"->new(x => $_->[0], y => $_->[1]);
         };
 }
 

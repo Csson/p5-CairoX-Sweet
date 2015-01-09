@@ -15,10 +15,13 @@ my $c = CairoX::Sweet->new(200, 100, background_color => [210, 120, 123]);
 
 is $c->background_color->red, 210/255, 'background has right amount of red';
 
-$c->line(color => '#ffffff', move => [42, 34], draw => [qw/
-	43 23
-	45 56
-	78 43
-/]);
+my $path = CairoX::Sweet::Path->new(start => [42, 34], color => '#ffffff');
+$path->add_line(qw/
+    43 23
+    45 56
+    78 43
+/);
+
+$c->add_path($path);
 
 done_testing;

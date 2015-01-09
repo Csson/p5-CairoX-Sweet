@@ -17,7 +17,7 @@ class CairoX::Sweet::Core::CurveTo using Moose {
         traits => ['Array'],
         required => 1,
         handles => {
-        	all_points => 'elements',
+            all_points => 'elements',
         }
     );
     has is_relative => (
@@ -27,6 +27,16 @@ class CairoX::Sweet::Core::CurveTo using Moose {
     );
 
     around BUILDARGS($orig: $self, Num $x1, Num $y1, Num $x2, Num $y2, Num $x3, Num $y3, Bool :$is_relative = 0) {
-        $self->$orig(is_relative => $is_relative, point => CairoX::Sweet::Core::Point->new(x => $x, y => $y));
+        $self->$orig(is_relative => $is_relative, points => [
+                                                    CairoX::Sweet::Core::Point->new(x => $x1, y => $y1),
+                                                    CairoX::Sweet::Core::Point->new(x => $x2, y => $y2),
+                                                    CairoX::Sweet::Core::Point->new(x => $x3, y => $y3)
+                                                ]);
+    }
+    method out {
+        return map { $_->out } $self->all_points;
+    }
+    method method {
+        return $self->is_relative ? 'rel_curve_to' : 'curve_to';
     }
 }

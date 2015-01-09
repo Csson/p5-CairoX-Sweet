@@ -25,4 +25,10 @@ class CairoX::Sweet::Core::LineTo using Moose {
     around BUILDARGS($orig: $self, Num $x, Num $y, Bool :$is_relative = 0) {
         $self->$orig(is_relative => $is_relative, point => CairoX::Sweet::Core::Point->new(x => $x, y => $y));
     }
+    method out {
+        return $self->point->out;
+    }
+    method method {
+        return $self->is_relative ? 'rel_line_to' : 'line_to';
+    }
 }

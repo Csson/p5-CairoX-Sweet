@@ -13,9 +13,10 @@ use Cairo;
 class Sweet using Moose {
     
     use CairoX::Sweet::Color;
-    use CairoX::Sweet::Core::Path;
-    use aliased 'CairoX::Sweet::Core::LineTo';
-    use aliased 'CairoX::Sweet::Core::MoveTo';
+    use CairoX::Sweet::Path;
+    use CairoX::Sweet::Core::CurveTo;
+    use CairoX::Sweet::Core::LineTo;
+    use CairoX::Sweet::Core::MoveTo;
     
     has surface_format => (
         is => 'ro',
@@ -37,17 +38,10 @@ class Sweet using Moose {
         predicate => 1,
         coerce => 1,
     );
-    has path => (
-        is => 'rw',
-        isa => Path,
-        default => sub { CairoX::Sweet::Core::Path->new },
-    );
-    
     has c => (
         is => 'ro',
         isa => CairoContext,
     );
-    
     has surface => (
         is => 'ro',
         isa => CairoImageSurface,
@@ -74,63 +68,81 @@ class Sweet using Moose {
         }
     }
 
-    method draw(Str :$method!,
-                Int :$num_per_iteration,
-                Maybe[Color] :$color? does coerce,
-                Maybe[Color] :$background_color? does coerce,
-                ArrayRefNumOfTwo :$move = [],
-                Bool :$stop!,
-                ArrayRef[Num] :$draw = [],
-    ){
-
-        if(scalar @$move) {
-            $self->path->add(MoveTo->new(@$move));
+    method add_path(Path $path) {
+        if($path->has_background_color) {
+            foreach my $command ($path->all_commands) {
+                my $method = $command->method;
+                $self->c->$method($command->out);
+            }
+            $self->c->set_source_rgb($path->background_color->color);
+            $self->c->fill;
         }
-        my $move_to_x = shift @$move if scalar @$move;
-        my $move_to_y = shift @$move if scalar @$move;
-
-        if(defined $background_color) {
-            $self->c->set_source_rgb($background_color->color);
-
-            if(scalar @$move) {
-                $self->c->move_to($move_to_x, $move_to_y);
+        if(($path->has_background_color && $self->has_color) || !$self->has_background_color) {
+            foreach my $command ($path->all_commands) {
+                my $method = $command->method;
+                $self->c->$method($command->out);
             }
-
-            DRAW:
-            while(scalar @$draw) {
-                if($method eq 'line_to') {
-                    $self->path->add(LineTo->new($draw->[0], $draw->[1]));
-                }
-                $self->c->$method(splice @$draw, 0, $num_per_iteration);
-            }
-            if($stop) {
-                $self->c->fill;
-            }
-
+            $self->c->set_source_rgb($path->color->color)) if $path->has_color;
+            $self->c->set_line_width($path->width) if $path->has_width;
+            $self->c->stroke;
         }
-        if((defined $background_color && defined $color) || !defined $background_color) {
-    
-            $self->c->set_source_rgb($color->color) if defined $color;
-
-            if(scalar @$move) {
-                $self->c->move_to($move_to_x, $move_to_y);
-            }
-            DRAW:
-            while(scalar @$draw) {
-                $self->c->$method(splice @$draw, 0, $num_per_iteration);
-            }
-            if($stop && defined $color) {
-                $self->c->stroke;
-            }
-        }
+        $path->purge;
     }
 
-    method line(Color :$color does coerce, Color :$background_color? does coerce, ArrayRefNumOfTwo :$move = [], Bool :$stop = 1, ArrayRefNumOfTwo :$draw?) {
-        $self->draw(method => 'line_to', num_per_iteration => 2, eh $draw, $move, $stop, $color, $background_color);
-    }
-    method curve(Color :$color does coerce, Color :$background_color? does coerce, ArrayRefNumOfTwo :$move = [], Bool :$stop = 1, ArrayRefNumOfSix :$draw?) {
-        $self->draw(method => 'curve_to', num_per_iteration => 6    , eh $draw, $move, $stop, $color, $background_color);
-    }
+#    method draw(TypeTiny :$type!,
+#                Maybe[Color] :$color? does coerce,
+#                Maybe[Color] :$background_color? does coerce,
+#                ArrayRefNumOfTwo :$move = [],
+#                Bool :$stop!,
+#                ArrayRef[Num] :$draw = [],
+#    ){
+#
+#        my $num_per_iteration = $type->name eq 'CurveTo' ? 6 
+#                              : $type->name eq 'LineTo'  ? 2
+#                              : $type->name eq 'MoveTo'  ? 2
+#                              :                            1
+#                              ;
+#
+#        if(scalar @$move) {
+#            $self->path->add_command(CairoX::Sweet::Core::MoveTo->new(@$move));
+#        }
+#
+#        while(scalar @$draw) {
+#            my $class = sprintf "CairoX::Sweet::Core::%s", $type->name;
+#            $self->path->add_command($class->new(splice @$draw, 0, $num_per_iteration));
+#        }
+#
+#        if($stop) {
+#            if(defined $background_color) {
+#                warn 'Drawing background';
+#                $self->c->set_source_rgb($background_color->color);
+#
+#                foreach my $command ($self->path->all_commands) {
+#                    my $method = $command->method;
+#                    $self->c->$method($command->out);
+#                }
+#                $self->c->fill;
+#            }
+#            if((defined $background_color && defined $color) || !defined $background_color) {
+#                warn 'Drawing foreground';
+#                $self->c->set_source_rgb($color->color) if defined $color;
+#
+#                foreach my $command ($self->path->all_commands) {
+#                    my $method = $command->method;
+#                    $self->c->$method($command->out);
+#                }
+#                $self->c->stroke;
+#            }
+#            $self->path->purge;
+#        }
+#    }
+#
+#    method line(Color :$color does coerce, Color :$background_color? does coerce, ArrayRefNumOfTwo :$move = [], Bool :$stop = 0, ArrayRefNumOfTwo :$draw?) {
+#        $self->draw(type => LineTo, eh $draw, $move, $stop, $color, $background_color);
+#    }
+#    method curve(Color :$color does coerce, Color :$background_color? does coerce, ArrayRefNumOfTwo :$move = [], Bool :$stop = 0, ArrayRefNumOfSix :$draw?) {
+#        $self->draw(type => CurveTo, eh $draw, $move, $stop, $color, $background_color);
+#    }
 }
 
 
