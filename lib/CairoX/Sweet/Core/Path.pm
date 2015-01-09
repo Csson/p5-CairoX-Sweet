@@ -4,10 +4,10 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet::Color
+# PODNAME: CairoX::Sweet::Core::Path
 # ABSTRACT: Short intro
 
-class CairoX::Sweet::Color using Moose {
+class CairoX::Sweet::Core::Path using Moose {
 
     foreach my $color (qw/red green blue/) {
         has $color => (

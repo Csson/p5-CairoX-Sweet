@@ -6,15 +6,18 @@ use Moops;
 # VERSION
 # PODNAME: Types::CairoX::Sweet
 # ABSTRACT:
-
 library Types::CairoX::Sweet
 
 extends Types::Standard
 
 declares CairoImageSurface,
          CairoContext,
-         UpToOneNum,
-         Color
+         ArrayRefNumOfTwo,
+         ArrayRefNumOfFour,
+         ArrayRefNumOfSix,
+         Color,
+         NumUpToOne,
+         Path
 
 {
     use List::AllUtils qw/any zip/;
@@ -23,11 +26,31 @@ declares CairoImageSurface,
     class_type CairoImageSurface => { class => 'Cairo::ImageSurface' };
 
     class_type Color   => { class => 'CairoX::Sweet::Color' };
+    class_type Path    => { class => 'CairoX::Sweet::Core::Path' };
 
-    declare UpToOneNum, as Num,
+    declare ArrayRefNumOfTwo, as ArrayRef[Num],
+        where { scalar @$_ % 2 == 0 },
+        message {
+            return ArrayRef->get_message($_) if !ArrayRef->check($_);
+            return "Takes two values per unit";
+        };
+    declare ArrayRefNumOfFour, as ArrayRef[Num],
+        where { scalar @$_ % 4 == 0 },
+        message {
+            return ArrayRef->get_message($_) if !ArrayRef->check($_);
+            return "Takes four values per unit";
+        };
+    declare ArrayRefNumOfSix, as ArrayRef[Num],
+        where { scalar @$_ % 6 == 0 },
+        message {
+            return ArrayRef->get_message($_) if !ArrayRef->check($_);
+            return "Takes six values per unit";
+        };
+
+    declare NumUpToOne, as Num,
         where { $_ >= 0 && $_ <= 1 },
         message {
-            return Num->get_message($_)  if !Num->check($_);
+            return Num->get_message($_) if !Num->check($_);
             return "$_ is too small. Minimum allowed value is 0" if $_ < 0;
             return "$_ is too big. Maximum allowed value is 1";
         };
