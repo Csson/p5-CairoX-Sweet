@@ -4,7 +4,7 @@ CairoX - Wraps Cairo for easier drawing
 
 # VERSION
 
-Version 0.0001, released 2015-01-11.
+Version 0.0101, released 2015-01-11.
 
 # SYNOPSIS
 
