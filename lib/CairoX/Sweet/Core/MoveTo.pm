@@ -7,7 +7,7 @@ use CairoX::Sweet::Standard;
 # PODNAME: CairoX::Sweet::Core::MoveTo
 # ABSTRACT: Short intro
 
-class CairoX::Sweet::Core::MoveTo using Moose {
+class CairoX::Sweet::Core::MoveTo with CairoX::Sweet::Role::PathCommand using Moose {
 
     use CairoX::Sweet::Core::Point;
 
@@ -31,5 +31,11 @@ class CairoX::Sweet::Core::MoveTo using Moose {
     }
     method method {
         return $self->is_relative ? 'rel_move_to' : 'move_to';
+    }
+    method location {
+        return $self->point;
+    }
+    method move_location(:$x = 0, :$y = 0) {
+        $self->point->move(x => $x, y => $y);
     }
 }

@@ -9,6 +9,7 @@ package CairoX::Sweet::Standard {
     use MooseX::StrictConstructor();
     use List::AllUtils();
     use Eponymous::Hash();
+    use Path::Tiny();
 
     sub import {
         my $class = shift;
@@ -19,6 +20,7 @@ package CairoX::Sweet::Standard {
             'MooseX::StrictConstructor' => [],
             'List::AllUtils' => [qw/any sum zip/],
             'Eponymous::Hash' => ['eh'],
+            'Path::Tiny' => ['path'],
         );
 
         $class->SUPER::import(%opts);

@@ -7,7 +7,7 @@ use CairoX::Sweet::Standard;
 # PODNAME: CairoX::Sweet::Core::CurveTo
 # ABSTRACT: Short intro
 
-class CairoX::Sweet::Core::CurveTo using Moose {
+class CairoX::Sweet::Core::CurveTo with CairoX::Sweet::Role::PathCommand using Moose {
 
     use CairoX::Sweet::Core::Point;
 
@@ -18,6 +18,7 @@ class CairoX::Sweet::Core::CurveTo using Moose {
         required => 1,
         handles => {
             all_points => 'elements',
+            get_point => 'get',
         }
     );
     has is_relative => (
@@ -38,5 +39,13 @@ class CairoX::Sweet::Core::CurveTo using Moose {
     }
     method method {
         return $self->is_relative ? 'rel_curve_to' : 'curve_to';
+    }
+    method location {
+        return $self->get_point(-1);
+    }
+    method move_location(:$x = 0, :$y = 0) {
+        foreach my $point ($self->all_points) {
+            $point->move(x => $x, y => $y);
+        }
     }
 }

@@ -10,12 +10,12 @@ use CairoX::Sweet::Standard;
 class CairoX::Sweet::Core::Point using Moose {
 
     has x => (
-        is => 'ro',
+        is => 'rw',
         isa => Num,
         required => 1,
     );
     has y => (
-        is => 'ro',
+        is => 'rw',
         isa => Num,
         required => 1,
     );
@@ -23,7 +23,8 @@ class CairoX::Sweet::Core::Point using Moose {
     method out {
         return ($self->x, $self->y);
     }
-    around BUILDARGS($orig: $self, @args) {
-        $self->$orig(@args);
+    method move(:$x = 0, :$y = 0) {
+        $self->x($self->x + $x);
+        $self->y($self->y + $y);
     }
 }

@@ -7,7 +7,7 @@ use CairoX::Sweet::Standard;
 # PODNAME: CairoX::Sweet::Core::LineTo
 # ABSTRACT: Short intro
 
-class CairoX::Sweet::Core::LineTo using Moose {
+class CairoX::Sweet::Core::LineTo with CairoX::Sweet::Role::PathCommand using Moose {
 
     use CairoX::Sweet::Core::Point;
 
@@ -31,5 +31,11 @@ class CairoX::Sweet::Core::LineTo using Moose {
     }
     method method {
         return $self->is_relative ? 'rel_line_to' : 'line_to';
+    }
+    method location {
+        return $self->point;
+    }
+    method move_location(:$x = 0, :$y = 0) {
+        $self->point->move(x => $x, y => $y);
     }
 }
