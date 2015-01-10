@@ -23,4 +23,7 @@ class CairoX::Sweet::Core::Point using Moose {
     method out {
         return ($self->x, $self->y);
     }
+    around BUILDARGS($orig: $self, @args) {
+        $self->$orig(@args);
+    }
 }

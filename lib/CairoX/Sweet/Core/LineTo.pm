@@ -22,8 +22,9 @@ class CairoX::Sweet::Core::LineTo using Moose {
         required => 1,
     );
 
-    around BUILDARGS($orig: $self, Num $x, Num $y, Bool :$is_relative = 0) {
-        $self->$orig(is_relative => $is_relative, point => CairoX::Sweet::Core::Point->new(x => $x, y => $y));
+    around BUILDARGS($orig: $self, Num $x,  Num $y, Bool :$is_relative = 0) {
+        my $point = CairoX::Sweet::Core::Point->new(x => $x, y => $y);
+        $self->$orig(is_relative => $is_relative, point => $point);
     }
     method out {
         return $self->point->out;

@@ -4,7 +4,7 @@ CairoX - Short intro
 
 # VERSION
 
-Version 0.0001, released 2015-01-09.
+Version 0.0001, released 2015-01-10.
 
 # SYNOPSIS
 

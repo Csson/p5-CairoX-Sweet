@@ -27,7 +27,7 @@ declares CairoImageSurface,
     use List::AllUtils qw/any zip/;
 
     class_type CairoContext      => { class => 'Cairo::Context' };
-    class_type CairoImageSurface => { class => 'Cairo::ImageSurface' };
+    class_type CairoSurface => { class => 'Cairo::Surface' };
 
     class_type Color   => { class => 'CairoX::Sweet::Color' };
     class_type CurveTo    => { class => 'CairoX::Sweet::Core::CurveTo' };
@@ -93,11 +93,11 @@ declares CairoImageSurface,
 
     coerce Point,
         from ArrayRefNumOfTwo, via {
-            "CairoX::Sweet::Core::Point"->new(x => $_->[0], y => $_->[1]);
+            "CairoX::Sweet::Core::Point"->new($_->[0], $_->[1]);
         };
     coerce MoveTo,
         from ArrayRefNumOfTwo, via {
-            "CairoX::Sweet::Core::MoveTo"->new(x => $_->[0], y => $_->[1]);
+            "CairoX::Sweet::Core::MoveTo"->new($_->[0], $_->[1]);
         };
 }
 

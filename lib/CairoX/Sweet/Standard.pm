@@ -17,7 +17,7 @@ package CairoX::Sweet::Standard {
         push @{ $opts{'imports'} ||= [] } => (
             'Types::CairoX::Sweet' => [{ replace => 1 }, '-types'],
             'MooseX::StrictConstructor' => [],
-            'List::AllUtils' => [qw/any zip/],
+            'List::AllUtils' => [qw/any sum zip/],
             'Eponymous::Hash' => ['eh'],
         );
 

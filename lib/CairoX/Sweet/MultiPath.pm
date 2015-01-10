@@ -4,10 +4,10 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet::Path
+# PODNAME: CairoX::Sweet::MultiPath
 # ABSTRACT: Short intro
 
-class CairoX::Sweet::Path using Moose {
+class CairoX::Sweet::MultiPath using Moose {
 
     use Type::Utils qw/enum/;
     use CairoX::Sweet::Core::LineTo;
@@ -24,22 +24,30 @@ class CairoX::Sweet::Path using Moose {
         predicate => 1,
         coerce => 1,
     );
-    has color => (
+    has colors => (
         is => 'rw',
-        isa => Maybe[Color],
+        isa => ArrayRef[Color],
         coerce => 1,
         predicate => 1,
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            count_colors => 'count',
+            all_colors => 'elements',
+            map_colors => 'map',
+        },
     );
-    has background_color => (
+    has widths => (
         is => 'rw',
-        isa => Maybe[Color],
-        coerce => 1,
+        isa => ArrayRef[Num],
         predicate => 1,
-    );
-    has width => (
-        is => 'rw',
-        isa => Maybe[Num],
-        predicate => 1,
+        traits => ['Array'],
+        default => sub { [] },
+        handles => {
+            count_widths => 'count',
+            all_widths => 'elements',
+            map_widths => 'map',
+        },
     );
     has cap => (
         is => 'rw',
@@ -51,17 +59,21 @@ class CairoX::Sweet::Path using Moose {
         isa => enum([qw/miter round bevel/]),
         default => 'miter',
     );
-    has commands => (
+    has paths => (
         is => 'rw',
         isa => ArrayRef,
         traits => ['Array'],
         handles => {
-            add_command => 'push',
-            all_commands => 'elements',
+            add_path => 'push',
+            all_paths => 'elements',
         },
     );
     around BUILDARGS($orig: $self, @args) {
         my %args = @args;
+
+        if(scalar @{ $args{'color'} } != scalar @{ $args{'width'} }) {
+            die "Needs same amount of 'color' and 'width'";
+        }
         if(exists $args{'start'}) {
             $args{'start'} = CairoX::Sweet::Core::MoveTo->new(@{ $args{'start'} }, is_relative => 0);
         }
@@ -108,16 +120,17 @@ class CairoX::Sweet::Path using Moose {
         return $self->$add_line(1, @values);
     }
 
-    method add_curve(@values) {
-        while(scalar @values >= 6) {
-            $self->add_command(CairoX::Sweet::Core::CurveTo->new(splice(@values, 0,6), is_relative => 0));
-        }
-        return $self;
+
+    method total_width {
+        return $self->count_widths + sum($self->all_widths);
     }
-    method add_relative_curve(@values) {
-        while(scalar @values >= 6) {
-            $self->add_command(CairoX::Sweet::Core::CurveTo->new(splice(@values, 0, 6), is_relative => 1));
+    method draw_relative_lines(@values) {
+        while(scalar @values > 2) {
+            my($x, $y) = splice @values, 0 => 2;
+            my $nextx = $values[0];
+            my $nexty = $values[1];
+
+            m
         }
-        return $self;
     }
 }

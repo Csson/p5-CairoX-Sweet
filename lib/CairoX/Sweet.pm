@@ -12,8 +12,10 @@ use Cairo;
 
 class Sweet using Moose {
     
+    use Type::Utils qw/enum/;
     use CairoX::Sweet::Color;
     use CairoX::Sweet::Path;
+    use CairoX::Sweet::MultiPath;
     use CairoX::Sweet::Core::CurveTo;
     use CairoX::Sweet::Core::LineTo;
     use CairoX::Sweet::Core::MoveTo;
@@ -44,7 +46,7 @@ class Sweet using Moose {
     );
     has surface => (
         is => 'ro',
-        isa => CairoImageSurface,
+        isa => CairoSurface,
     );
 
     around BUILDARGS($orig: $self, Int $width, Int $height, @args) {
@@ -77,72 +79,31 @@ class Sweet using Moose {
             $self->c->set_source_rgb($path->background_color->color);
             $self->c->fill;
         }
-        if(($path->has_background_color && $self->has_color) || !$self->has_background_color) {
+        if(($path->has_background_color && $path->has_color) || !$path->has_background_color) {
             foreach my $command ($path->all_commands) {
                 my $method = $command->method;
                 $self->c->$method($command->out);
             }
-            $self->c->set_source_rgb($path->color->color)) if $path->has_color;
+            $self->c->set_line_cap($path->cap);
+            $self->c->set_line_join($path->join);
+            $self->c->set_source_rgb($path->color->color) if $path->has_color;
             $self->c->set_line_width($path->width) if $path->has_width;
             $self->c->stroke;
         }
         $path->purge;
     }
 
-#    method draw(TypeTiny :$type!,
-#                Maybe[Color] :$color? does coerce,
-#                Maybe[Color] :$background_color? does coerce,
-#                ArrayRefNumOfTwo :$move = [],
-#                Bool :$stop!,
-#                ArrayRef[Num] :$draw = [],
-#    ){
-#
-#        my $num_per_iteration = $type->name eq 'CurveTo' ? 6 
-#                              : $type->name eq 'LineTo'  ? 2
-#                              : $type->name eq 'MoveTo'  ? 2
-#                              :                            1
-#                              ;
-#
-#        if(scalar @$move) {
-#            $self->path->add_command(CairoX::Sweet::Core::MoveTo->new(@$move));
-#        }
-#
-#        while(scalar @$draw) {
-#            my $class = sprintf "CairoX::Sweet::Core::%s", $type->name;
-#            $self->path->add_command($class->new(splice @$draw, 0, $num_per_iteration));
-#        }
-#
-#        if($stop) {
-#            if(defined $background_color) {
-#                warn 'Drawing background';
-#                $self->c->set_source_rgb($background_color->color);
-#
-#                foreach my $command ($self->path->all_commands) {
-#                    my $method = $command->method;
-#                    $self->c->$method($command->out);
-#                }
-#                $self->c->fill;
-#            }
-#            if((defined $background_color && defined $color) || !defined $background_color) {
-#                warn 'Drawing foreground';
-#                $self->c->set_source_rgb($color->color) if defined $color;
-#
-#                foreach my $command ($self->path->all_commands) {
-#                    my $method = $command->method;
-#                    $self->c->$method($command->out);
-#                }
-#                $self->c->stroke;
-#            }
-#            $self->path->purge;
-#        }
-#    }
-#
-#    method line(Color :$color does coerce, Color :$background_color? does coerce, ArrayRefNumOfTwo :$move = [], Bool :$stop = 0, ArrayRefNumOfTwo :$draw?) {
-#        $self->draw(type => LineTo, eh $draw, $move, $stop, $color, $background_color);
-#    }
-#    method curve(Color :$color does coerce, Color :$background_color? does coerce, ArrayRefNumOfTwo :$move = [], Bool :$stop = 0, ArrayRefNumOfSix :$draw?) {
-#        $self->draw(type => CurveTo, eh $draw, $move, $stop, $color, $background_color);
-#    }
+    method add_text(Num :$x, Num :$y, Color :$color does coerce, Str :$text!, ArrayRef[Str] :$font_face = [], Num  :$font_size, Enum[qw/normal italic oblique/] :$slant = 'normal',  Enum[qw/normal bold/] :$weight = 'normal') {
+        $self->c->select_font_face(@{ $font_face }, $slant, $weight) if scalar @$font_face;
+        $self->c->set_font_size($font_size) if defined $font_size;
+        $self->c->set_source_rgb($color->color) if defined $color;
+        $self->c->move_to($x, $y)               if defined $x && defined $y;
+
+        $self->c->show_text($text);
+        $self->c->fill;
+        
+    }
+
 }
 
 
