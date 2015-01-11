@@ -8,6 +8,7 @@ package CairoX;
 use Cairo;
 
 # VERSION
+# PODNAME: CairoX::Sweet
 # ABSTRACT: Wraps Cairo for easier drawing
 
 class Sweet using Moose {

@@ -8,7 +8,6 @@ package CairoX::Sweet::Standard {
     use Types::CairoX::Sweet();
     use MooseX::StrictConstructor();
     use List::AllUtils();
-    use Eponymous::Hash();
     use Path::Tiny();
 
     sub import {
@@ -19,7 +18,6 @@ package CairoX::Sweet::Standard {
             'Types::CairoX::Sweet' => [{ replace => 1 }, '-types'],
             'MooseX::StrictConstructor' => [],
             'List::AllUtils' => [qw/any sum zip/],
-            'Eponymous::Hash' => ['eh'],
             'Path::Tiny' => ['path'],
         );
 

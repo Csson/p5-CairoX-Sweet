@@ -5,7 +5,7 @@ use CairoX::Sweet::Standard;
 
 # VERSION
 # PODNAME: CairoX::Sweet::Color
-# ABSTRACT: Short intro
+# ABSTRACT:
 
 class CairoX::Sweet::Color using Moose {
 

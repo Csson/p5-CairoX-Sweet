@@ -5,7 +5,7 @@ use CairoX::Sweet::Standard;
 
 # VERSION
 # PODNAME: CairoX::Sweet::Path
-# ABSTRACT: Handles a path
+# ABSTRACT:
 
 class CairoX::Sweet::Path using Moose {
 

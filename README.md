@@ -1,6 +1,6 @@
 # NAME
 
-CairoX - Wraps Cairo for easier drawing
+CairoX::Sweet - Wraps Cairo for easier drawing
 
 # VERSION
 

@@ -5,7 +5,7 @@ use CairoX::Sweet::Standard;
 
 # VERSION
 # PODNAME: CairoX::Sweet::Core::Point
-# ABSTRACT: Short intro
+# ABSTRACT:
 
 class CairoX::Sweet::Core::Point using Moose {
 

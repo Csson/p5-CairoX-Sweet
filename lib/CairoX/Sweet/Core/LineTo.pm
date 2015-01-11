@@ -5,7 +5,7 @@ use CairoX::Sweet::Standard;
 
 # VERSION
 # PODNAME: CairoX::Sweet::Core::LineTo
-# ABSTRACT: Short intro
+# ABSTRACT:
 
 class CairoX::Sweet::Core::LineTo with CairoX::Sweet::Role::PathCommand using Moose {
 
