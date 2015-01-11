@@ -5,7 +5,6 @@ use Moops;
 
 # VERSION
 # PODNAME: Types::CairoX::Sweet
-# ABSTRACT:
 library Types::CairoX::Sweet
 
 extends Types::Standard, Types::TypeTiny

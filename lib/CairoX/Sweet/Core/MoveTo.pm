@@ -5,7 +5,6 @@ use CairoX::Sweet::Standard;
 
 # VERSION
 # PODNAME: CairoX::Sweet::Core::MoveTo
-# ABSTRACT:
 
 class CairoX::Sweet::Core::MoveTo with CairoX::Sweet::Role::PathCommand using Moose {
 

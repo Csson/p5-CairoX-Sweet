@@ -5,7 +5,6 @@ use CairoX::Sweet::Standard;
 
 # VERSION
 # PODNAME: CairoX::Sweet::Core::CurveTo
-# ABSTRACT:
 
 class CairoX::Sweet::Core::CurveTo with CairoX::Sweet::Role::PathCommand using Moose {
 
