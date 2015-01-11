@@ -10,6 +10,8 @@ Revision history for CairoX-Sweet
  [Enhancements]
 
  [Meta]
+ - Set podname, cleanup abstracts
+ - Cleanup prereqs
 
  [New Features]
 
@@ -21,4 +23,3 @@ Revision history for CairoX-Sweet
 
 0.0100 2015-01-11T00:49:25Z CET
  - Initial release
-

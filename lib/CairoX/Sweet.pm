@@ -3,16 +3,20 @@ use strict;
 use warnings;
 use CairoX::Sweet::Standard;
 
-package CairoX;
-
-use Cairo;
-
 # VERSION
 # PODNAME: CairoX::Sweet
 # ABSTRACT: Wraps Cairo for easier drawing
 
-class Sweet using Moose {
+package CairoX::Sweet;
 
+sub new {
+    shift;
+    CairoX::Sweet::Wrap->new(@_);
+}
+
+class CairoX::Sweet::Wrap using Moose {
+
+    use Cairo;
     use Type::Utils qw/enum/;
     use Types::Path::Tiny qw/AbsPath/;
     use CairoX::Sweet::Color;
