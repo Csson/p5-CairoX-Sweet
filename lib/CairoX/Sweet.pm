@@ -19,7 +19,7 @@ class Sweet using Moose {
     use CairoX::Sweet::Core::CurveTo;
     use CairoX::Sweet::Core::LineTo;
     use CairoX::Sweet::Core::MoveTo;
-    
+
     has surface_format => (
         is => 'ro',
         isa => Str,
@@ -112,7 +112,7 @@ class Sweet using Moose {
 
         $self->c->show_text($text);
         $self->c->fill;
-        
+
     }
 
 }
@@ -217,7 +217,7 @@ Adds a L<CairoX::Sweet::Path> to the C<cairo> object.
 
 C<$path>
 
-The L<CairoX::Sweet::Path> to add. Required. 
+The L<CairoX::Sweet::Path> to add. Required.
 
 C<close => Bool>
 
@@ -229,7 +229,7 @@ on the C<$path> (connects the two end points of the C<$path>).
 
 Adds a string to the C<cairo> object. Takes only named parameters.
 
-    $c->add_text( text => "The text to add", 
+    $c->add_text( text => "The text to add",
                   color => '#444444',
                   x => 37,
                   y => 115,

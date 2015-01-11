@@ -19,7 +19,7 @@ class CairoX::Sweet::Core::Point using Moose {
         isa => Num,
         required => 1,
     );
-    
+
     method out {
         return ($self->x, $self->y);
     }

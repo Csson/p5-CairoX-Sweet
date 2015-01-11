@@ -21,7 +21,7 @@ class CairoX::Sweet::Color using Moose {
         default => 1,
         isa => NumUpToOne,
     );
-    
+
     method color {
         return ($self->red, $self->green, $self->blue);
     }

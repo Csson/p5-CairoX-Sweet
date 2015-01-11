@@ -152,7 +152,7 @@ __END__
 
     my $c = CairoX::Sweet->new(500, 500, '#ffffff');
     my $path = CairoX::Sweet::Path->new(start => [35, 50], color => '#8855bb', width => 10, cap => 'round', join => 'round');
-    
+
     $path->add_relative_line(qw/
         20 -5
         10 0
@@ -203,7 +203,7 @@ A number. Optional. Sets the pen width.
 
 =head2 cap => cap_type
 
-One of C<butt>, C<round> or C<square>. 
+One of C<butt>, C<round> or C<square>.
 
 =head2 join => join_type
 
@@ -265,7 +265,7 @@ Moves all points in the path C<x> and C<y> points from their current positions. 
 
     my $c = CairoX::Sweet->new(220, 130, background_color => '#ffffff');
     my $path = CairoX::Sweet::Path->new(start => [25, 50], color => '#8855bb', width => 10, join => 'miter');
-    
+
     $path->add_line(qw/
          45 95
          55 95

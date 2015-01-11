@@ -4,7 +4,7 @@ CairoX - Wraps Cairo for easier drawing
 
 # VERSION
 
-Version 0.0101, released 2015-01-11.
+Version 0.0102, released 2015-01-11.
 
 # SYNOPSIS
 
@@ -97,7 +97,7 @@ Adds a [CairoX::Sweet::Path](https://metacpan.org/pod/CairoX::Sweet::Path) to th
 
 `$path`
 
-The [CairoX::Sweet::Path](https://metacpan.org/pod/CairoX::Sweet::Path) to add. Required. 
+The [CairoX::Sweet::Path](https://metacpan.org/pod/CairoX::Sweet::Path) to add. Required.
 
 `close =` Bool>
 
@@ -108,7 +108,7 @@ on the `$path` (connects the two end points of the `$path`).
 
 Adds a string to the `cairo` object. Takes only named parameters.
 
-    $c->add_text( text => "The text to add", 
+    $c->add_text( text => "The text to add",
                   color => '#444444',
                   x => 37,
                   y => 115,
