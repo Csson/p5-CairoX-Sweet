@@ -36,24 +36,64 @@
       },
       "runtime" : {
          "requires" : {
-            "Cairo" : "0",
+            "Cairo" : "1.000",
             "Eponymous::Hash" : "0",
             "List::AllUtils" : "0",
             "Moops" : "0",
             "Moose" : "2.0000",
             "MooseX::StrictConstructor" : "0",
             "Path::Tiny" : "0",
-            "Type::Tiny" : "0",
+            "Type::Tiny" : "1.000000",
             "Types::Path::Tiny" : "0",
-            "Types::Standard" : "0",
-            "Types::TypeTiny" : "0",
-            "perl" : "5.010001"
+            "perl" : "5.014000"
          }
       },
       "test" : {
          "requires" : {
             "Test::More" : "0.96"
          }
+      }
+   },
+   "provides" : {
+      "CairoX::Sweet" : {
+         "file" : "lib/CairoX/Sweet.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Color" : {
+         "file" : "lib/CairoX/Sweet/Color.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Core::CurveTo" : {
+         "file" : "lib/CairoX/Sweet/Core/CurveTo.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Core::LineTo" : {
+         "file" : "lib/CairoX/Sweet/Core/LineTo.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Core::MoveTo" : {
+         "file" : "lib/CairoX/Sweet/Core/MoveTo.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Core::Point" : {
+         "file" : "lib/CairoX/Sweet/Core/Point.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Path" : {
+         "file" : "lib/CairoX/Sweet/Path.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Role::PathCommand" : {
+         "file" : "lib/CairoX/Sweet/Role/PathCommand.pm",
+         "version" : "0.0104"
+      },
+      "CairoX::Sweet::Standard" : {
+         "file" : "lib/CairoX/Sweet/Standard.pm",
+         "version" : "0.0104"
+      },
+      "Types::CairoX::Sweet" : {
+         "file" : "lib/Types/CairoX/Sweet.pm",
+         "version" : "0.0104"
       }
    },
    "release_status" : "stable",
@@ -68,6 +108,6 @@
          "web" : "https://github.com/Csson/p5-CairoX-Sweet"
       }
    },
-   "version" : "0.0103"
+   "version" : "0.0104"
 }
 
