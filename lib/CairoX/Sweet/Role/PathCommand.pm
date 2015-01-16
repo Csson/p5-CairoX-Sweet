@@ -5,3 +5,5 @@ use CairoX::Sweet::Standard;
 role CairoX::Sweet::Role::PathCommand using Moose {
     requires 'location', 'move_location';
 }
+
+1;
