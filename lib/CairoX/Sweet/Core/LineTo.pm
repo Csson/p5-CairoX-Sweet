@@ -4,9 +4,10 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet::Core::LineTo
+# PODCLASSNAME
+# ABSTRACT: Draw a line_to
 
-class CairoX::Sweet::Core::LineTo with CairoX::Sweet::Role::PathCommand using Moose {
+class CairoX::Sweet::Core::LineTo using Moose with CairoX::Sweet::Role::PathCommand {
 
     use CairoX::Sweet::Core::Point;
 

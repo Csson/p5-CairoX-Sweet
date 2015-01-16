@@ -4,7 +4,7 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet::Path
+# PODCLASSNAME
 # ABSTRACT: Handles a path
 
 class CairoX::Sweet::Path using Moose {
