@@ -4,17 +4,10 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet
+# PODCLASSNAME
 # ABSTRACT: Wraps Cairo for easier drawing
 
-package CairoX::Sweet;
-
-sub new {
-    shift;
-    CairoX::Sweet::Wrap->new(@_);
-}
-
-class CairoX::Sweet::Wrap using Moose {
+class CairoX::Sweet using Moose {
 
     use Cairo;
     use Type::Utils qw/enum/;
@@ -86,7 +79,8 @@ class CairoX::Sweet::Wrap using Moose {
         return $class->new($width, $height, %args);
     }
 
-    method add_path(Path $path, :$close = 0) {
+    method add_path(Path $path, Bool :$close = 0
+    ) {
         if($path->has_background_color) {
             foreach my $command ($path->all_commands) {
                 my $method = $command->method;
