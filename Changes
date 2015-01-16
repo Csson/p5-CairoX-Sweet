@@ -4,17 +4,23 @@ Revision history for CairoX-Sweet
  [API Changes]
 
  [Bug Fixes]
+ - Removed a faulty use statement.
+ - Now requires the right Perl version (5.14)
 
  [Documentation]
- - Remove empty abstracts
 
  [Enhancements]
 
  [Meta]
+ - Now adds all classes (and type library) to provides.
 
  [New Features]
 
  [Revision]
+
+0.0103 2015-01-11T12:40:38Z CET
+ [Documentation]
+ - Remove empty abstracts
 
 0.0102 2015-01-11T12:24:34Z CET
  [Meta]
