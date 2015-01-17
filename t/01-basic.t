@@ -3,6 +3,8 @@ use warnings FATAL => 'all';
 use Test::More;
 use if $ENV{'AUTHOR_TESTING'}, 'Test::Warnings';
 
+use Test::Requires qw(Cairo);
+
 use CairoX::Sweet;
 
 ok 1;
