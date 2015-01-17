@@ -4,7 +4,7 @@ use warnings;
 use CairoX::Sweet::Standard;
 
 # VERSION
-# PODNAME: CairoX::Sweet::Color
+# PODCLASSNAME
 
 class CairoX::Sweet::Color using Moose {
 
@@ -28,3 +28,5 @@ class CairoX::Sweet::Color using Moose {
         return ($self->red, $self->green, $self->blue, $self->opacity);
     }
 }
+
+1;
