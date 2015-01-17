@@ -4,7 +4,7 @@ requires 'MooseX::StrictConstructor';
 requires 'List::AllUtils';
 requires 'Eponymous::Hash';
 requires 'Moose', '2.0000';
-requires 'Moops';
+requires 'Moops', '0.034';
 requires 'Path::Tiny';
 requires 'Type::Tiny', '1.000000';
 requires 'Types::Path::Tiny';
@@ -12,4 +12,5 @@ requires 'Cairo', '1.000';
 
 on test => sub {
 	requires 'Test::More', '0.96';
+	requires 'Test::Requires', '0.08';
 };
