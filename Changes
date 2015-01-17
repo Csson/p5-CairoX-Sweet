@@ -4,19 +4,28 @@ Revision history for CairoX-Sweet
  [API Changes]
 
  [Bug Fixes]
- - Removed a faulty use statement.
- - Now requires the right Perl version (5.14)
+ - Added truth to Color (h)ad some test failures.
 
  [Documentation]
 
  [Enhancements]
+ - Require Cairo in test.
 
  [Meta]
- - Now adds all classes (and type library) to provides.
+ - Require latest Moops (0.034).
+ - New test prereq Test::Requires.
 
  [New Features]
 
  [Revision]
+
+0.0104 2015-01-16T11:49:12Z CET
+ [Bug Fixes]
+ - Removed a faulty use statement.
+ - Now requires the right Perl version (5.14)
+
+ [Meta]
+ - Now adds all classes (and type library) to provides.
 
 0.0103 2015-01-11T12:40:38Z CET
  [Documentation]
