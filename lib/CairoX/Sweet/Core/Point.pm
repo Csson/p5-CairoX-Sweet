@@ -27,3 +27,5 @@ class CairoX::Sweet::Core::Point using Moose {
         $self->y($self->y + $y);
     }
 }
+
+1;

@@ -48,3 +48,5 @@ class CairoX::Sweet::Core::CurveTo with CairoX::Sweet::Role::PathCommand using M
         }
     }
 }
+
+1;

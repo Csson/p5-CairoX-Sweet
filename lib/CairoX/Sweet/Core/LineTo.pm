@@ -39,3 +39,5 @@ class CairoX::Sweet::Core::LineTo using Moose with CairoX::Sweet::Role::PathComm
         $self->point->move(x => $x, y => $y);
     }
 }
+
+1;

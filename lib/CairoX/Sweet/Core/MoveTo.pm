@@ -38,3 +38,5 @@ class CairoX::Sweet::Core::MoveTo with CairoX::Sweet::Role::PathCommand using Mo
         $self->point->move(x => $x, y => $y);
     }
 }
+
+1;
