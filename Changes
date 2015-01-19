@@ -4,9 +4,21 @@ Revision history for CairoX-Sweet
  [API Changes]
 
  [Bug Fixes]
- - Added truth to Color (h)ad some test failures.
+ - Had more failures for truth, so added 1; to all Moops classes.
 
  [Documentation]
+
+ [Enhancements]
+
+ [Meta]
+
+ [New Features]
+
+ [Revision]
+
+0.0105 2015-01-17T12:56:27Z CET
+ [Bug Fixes]
+ - Added truth to Color (had some test failures).
 
  [Enhancements]
  - Require Cairo in test.
@@ -14,10 +26,6 @@ Revision history for CairoX-Sweet
  [Meta]
  - Require latest Moops (0.034).
  - New test prereq Test::Requires.
-
- [New Features]
-
- [Revision]
 
 0.0104 2015-01-16T11:49:12Z CET
  [Bug Fixes]
