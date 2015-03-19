@@ -2,6 +2,8 @@
 
 CairoX::Sweet - Wraps Cairo for easier drawing
 
+[![Travis status](https://api.travis-ci.org/Csson/p5-CairoX-Sweet.svg?branch=master)](https://travis-ci.org/Csson/p5-CairoX-Sweet) ![Requires Perl 5.14+](https://img.shields.io/badge/perl-5.14+-brightgreen.svg)
+
 # VERSION
 
 Version 0.0108, released 2015-03-19.
