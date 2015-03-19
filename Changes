@@ -10,6 +10,17 @@ Revision history for CairoX-Sweet
  [Enhancements]
 
  [Meta]
+
+ [New Features]
+
+ [Requirements]
+
+ [Revision]
+
+ [Testing]
+
+0.0107 2015-03-19T16:43:43Z CET
+ [Meta]
  - iller.yaml is now used to build dist.ini and weaver.ini
  - Various cleanup:
  - Prereqs are now set in dist.ini instead of cpanfile.
@@ -17,13 +28,8 @@ Revision history for CairoX-Sweet
  - Added strict and warnings to a couple of classes (for kwalitee).
  - Moved a couple of # VERSION to inside packages/classes.
 
- [New Features]
-
- [Revision]
-
  [Requirements]
  - Fixed missing prereqs.
-
 
 0.0106 2015-01-19T21:10:31Z CET
  [Bug Fixes]

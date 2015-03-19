@@ -4,7 +4,7 @@ CairoX::Sweet - Wraps Cairo for easier drawing
 
 # VERSION
 
-Version 0.0107, released 2015-03-19.
+Version 0.0108, released 2015-03-19.
 
 # SYNOPSIS
 
