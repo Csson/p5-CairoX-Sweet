@@ -46,8 +46,8 @@ plugins:
 
   - +plugin: Badges
     badge:
-     - travis
      - perl
+     - travis
     formats: html, markdown
     -travis_user: Csson
     -travis_repo: p5-CairoX-Sweet
