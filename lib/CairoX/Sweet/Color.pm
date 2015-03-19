@@ -3,10 +3,11 @@ use strict;
 use warnings;
 use CairoX::Sweet::Standard;
 
-# VERSION
 # PODCLASSNAME
 
 class CairoX::Sweet::Color using Moose {
+
+    # VERSION
 
     foreach my $color (qw/red green blue/) {
         has $color => (

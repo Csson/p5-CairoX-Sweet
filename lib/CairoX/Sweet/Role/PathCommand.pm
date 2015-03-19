@@ -1,8 +1,12 @@
 use CairoX::Sweet::Standard;
+use strict;
+use warnings;
 
-# PODNAME: CairoX::Sweet::Role::PathCommand
+# PODCLASSNAME
 
 role CairoX::Sweet::Role::PathCommand using Moose {
+
+    # VERSION
     requires 'location', 'move_location';
 }
 

@@ -4,7 +4,7 @@ CairoX::Sweet - Wraps Cairo for easier drawing
 
 # VERSION
 
-Version 0.0106, released 2015-01-19.
+Version 0.0107, released 2015-03-19.
 
 # SYNOPSIS
 
@@ -28,10 +28,6 @@ Version 0.0106, released 2015-01-19.
 CairoX::Sweet is a wrapper around [Cairo](https://metacpan.org/pod/Cairo) which uses the great [cairo](http://www.cairographics.org/) graphics library.
 
 For some use cases the standard api is a little verbose, the goal of this distribution is to reduce that.
-
-# STABILITY
-
-Since this is an early release things might break, but hopefully not without good cause.
 
 # CONSTRUCTORS
 
@@ -161,6 +157,10 @@ Returns the [Cairo](https://metacpan.org/pod/Cairo) object itself.
 Return the [Cairo surface](https://metacpan.org/pod/Cairo#Surfaces).
 
     $c->surface->write_to_png('a_short_line.png');
+
+# STABILITY
+
+Since this is an early release things might break, but hopefully not without good cause.
 
 # PERFORMANCE
 

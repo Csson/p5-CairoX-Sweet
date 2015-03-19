@@ -3,8 +3,8 @@ use warnings;
 
 use Moops;
 
-# VERSION
-# PODNAME: Types::CairoX::Sweet
+# PODCLASSNAME
+
 library Types::CairoX::Sweet
 
 extends Types::Standard, Types::TypeTiny
@@ -23,6 +23,9 @@ declares CairoImageSurface,
          Point
 
 {
+
+    # VERSION
+
     use List::AllUtils qw/any zip/;
 
     class_type CairoContext      => { class => 'Cairo::Context' };

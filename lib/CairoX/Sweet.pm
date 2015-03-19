@@ -3,11 +3,12 @@ use strict;
 use warnings;
 use CairoX::Sweet::Standard;
 
-# VERSION
 # PODCLASSNAME
-# ABSTRACT: Wraps Cairo for easier drawing
 
 class CairoX::Sweet using Moose {
+
+    # VERSION
+    # ABSTRACT: Wraps Cairo for easier drawing
 
     use Cairo;
     use Type::Utils qw/enum/;

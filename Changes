@@ -4,17 +4,30 @@ Revision history for CairoX-Sweet
  [API Changes]
 
  [Bug Fixes]
- - Had more failures for truth, so added 1; to all Moops classes.
 
  [Documentation]
 
  [Enhancements]
 
  [Meta]
+ - iller.yaml is now used to build dist.ini and weaver.ini
+ - Various cleanup:
+ - Prereqs are now set in dist.ini instead of cpanfile.
+ - Changed some # PODNAME to # PODCLASSNAME.
+ - Added strict and warnings to a couple of classes (for kwalitee).
+ - Moved a couple of # VERSION to inside packages/classes.
 
  [New Features]
 
  [Revision]
+
+ [Requirements]
+ - Fixed missing prereqs.
+
+
+0.0106 2015-01-19T21:10:31Z CET
+ [Bug Fixes]
+ - Had more failures for truth, so added 1; to all Moops classes.
 
 0.0105 2015-01-17T12:56:27Z CET
  [Bug Fixes]

@@ -4,6 +4,24 @@ doctype: dist
 header:
   name: CairoX-Sweet
 
+prereqs:
+  runtime:
+    requires:
+      - perl: 5.014000
+      - MooseX::StrictConstructor
+      - List::AllUtils
+      - Eponymous::Hash
+      - Moose: 2.0000
+      - Moops: 0.034
+      - Path::Tiny
+      - Type::Tiny: 1.000000
+      - Types::Path::Tiny
+      - Cairo: 1.000
+
+  test:
+    requires:
+      - Test::Requires: 0.08
+
 plugins:
   - +config: Author::CSSON
 
@@ -26,23 +44,3 @@ plugins:
   - +config: Author::CSSON
 
   - +remove_plugin: Splint
-
-#
-#
-#[@Author::CSSON]
-#is_private = 0
-#has_travis = 1
-#Git::GatherDir.exclude_match = \.png
-#
-#TravisYML.perl_version = 5.16
-#TravisYML.post_before_install = sudo apt-get install libcairo2-dev
-#TravisYML.pre_install = cpanm Cairo
-#
-#NextVersion::Semantic.major =
-#NextVersion::Semantic.minor = API Changes, New Features, Enhancements
-#NextVersion::Semantic.revision = Revision, Bug Fixes, Documentation, Meta
-#NextVersion::Semantic.format = %d.%02d%02d
-#NextVersion::Semantic.numify_version = 0
-#
-#[MetaProvides::FromFile]
-#file = meta.ini

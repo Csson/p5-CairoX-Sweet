@@ -1,8 +1,11 @@
 use 5.14.0;
+use strict;
+use warnings;
 
-# VERSION
 
 package CairoX::Sweet::Standard {
+
+    # VERSION
 
     use base 'Moops';
     use Types::CairoX::Sweet();

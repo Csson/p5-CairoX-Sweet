@@ -3,11 +3,12 @@ use strict;
 use warnings;
 use CairoX::Sweet::Standard;
 
-# VERSION
 # PODCLASSNAME
-# ABSTRACT: Handles a path
 
 class CairoX::Sweet::Path using Moose {
+
+    # VERSION
+    # ABSTRACT: Handles a path
 
     use Type::Utils qw/enum/;
     use CairoX::Sweet::Core::LineTo;
