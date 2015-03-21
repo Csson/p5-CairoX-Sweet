@@ -17,7 +17,6 @@ prereqs:
       - Type::Tiny: 1.000000
       - Types::Path::Tiny
       - Cairo: 1.000
-
   test:
     requires:
       - Test::Requires: 0.08
@@ -49,6 +48,3 @@ plugins:
      - perl
      - travis
     formats: html, markdown
-    -travis_user: Csson
-    -travis_repo: p5-CairoX-Sweet
-    -travis_branch: master
