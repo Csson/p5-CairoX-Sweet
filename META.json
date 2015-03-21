@@ -118,43 +118,43 @@
    "provides" : {
       "CairoX::Sweet" : {
          "file" : "lib/CairoX/Sweet.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Color" : {
          "file" : "lib/CairoX/Sweet/Color.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Core::CurveTo" : {
          "file" : "lib/CairoX/Sweet/Core/CurveTo.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Core::LineTo" : {
          "file" : "lib/CairoX/Sweet/Core/LineTo.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Core::MoveTo" : {
          "file" : "lib/CairoX/Sweet/Core/MoveTo.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Core::Point" : {
          "file" : "lib/CairoX/Sweet/Core/Point.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Path" : {
          "file" : "lib/CairoX/Sweet/Path.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Role::PathCommand" : {
          "file" : "lib/CairoX/Sweet/Role/PathCommand.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "CairoX::Sweet::Standard" : {
          "file" : "lib/CairoX/Sweet/Standard.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       },
       "Types::CairoX::Sweet" : {
          "file" : "lib/Types/CairoX/Sweet.pm",
-         "version" : "0.0108"
+         "version" : "0.0109"
       }
    },
    "release_status" : "stable",
@@ -169,6 +169,6 @@
          "web" : "https://github.com/Csson/p5-CairoX-Sweet"
       }
    },
-   "version" : "0.0108"
+   "version" : "0.0109"
 }
 

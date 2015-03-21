@@ -19,6 +19,10 @@ Revision history for CairoX-Sweet
 
  [Testing]
 
+0.0108 2015-03-21T19:36:20Z CET
+ [Documentation]
+ - Added badges (via Pod::Weaver::Section::Badges).
+
 0.0107 2015-03-19T16:43:43Z CET
  [Meta]
  - iller.yaml is now used to build dist.ini and weaver.ini
