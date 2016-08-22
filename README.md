@@ -2,11 +2,19 @@
 
 CairoX::Sweet - Wraps Cairo for easier drawing
 
-![Requires Perl 5.14+](https://img.shields.io/badge/perl-5.14+-brightgreen.svg) [![Travis status](https://api.travis-ci.org/Csson/p5-CairoX-Sweet.svg?branch=master)](https://travis-ci.org/Csson/p5-CairoX-Sweet)
+<div>
+    <p>
+    <img src="https://img.shields.io/badge/perl-5.10+-blue.svg" alt="Requires Perl 5.10+" />
+    <a href="https://travis-ci.org/Csson/p5-CairoX-Sweet"><img src="https://api.travis-ci.org/Csson/p5-CairoX-Sweet.svg?branch=master" alt="Travis status" /></a>
+    <a href="http://cpants.cpanauthors.org/release/CSSON/CairoX-Sweet-0.0200"><img src="http://badgedepot.code301.com/badge/kwalitee/CSSON/CairoX-Sweet/0.0200" alt="Distribution kwalitee" /></a>
+    <a href="http://matrix.cpantesters.org/?dist=CairoX-Sweet%200.0200"><img src="http://badgedepot.code301.com/badge/cpantesters/CairoX-Sweet/0.0200" alt="CPAN Testers result" /></a>
+    <img src="https://img.shields.io/badge/coverage-65.4%-red.svg" alt="coverage 65.4%" />
+    </p>
+</div>
 
 # VERSION
 
-Version 0.0109, released 2015-03-21.
+Version 0.0200, released 2016-08-22.
 
 # SYNOPSIS
 
@@ -187,7 +195,7 @@ Erik Carlsson <info@code301.com>
 
 # COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2015 by Erik Carlsson <info@code301.com>.
+This software is copyright (c) 2016 by Erik Carlsson.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
