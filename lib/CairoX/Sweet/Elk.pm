@@ -6,7 +6,7 @@ package CairoX::Sweet::Elk;
 
 # AUTHORITY
 # ABSTRACT: Internal Moose
-our $VERSION = '0.0200';
+our $VERSION = '0.0201';
 
 use Moose();
 use MooseX::AttributeShortcuts();

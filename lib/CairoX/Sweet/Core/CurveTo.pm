@@ -6,7 +6,7 @@ package CairoX::Sweet::Core::CurveTo;
 
 # ABSTRACT: Make a curve_to
 # AUTHORITY
-our $VERSION = '0.0200';
+our $VERSION = '0.0201';
 
 use CairoX::Sweet::Elk;
 use CairoX::Sweet::Core::Point;

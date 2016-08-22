@@ -6,7 +6,7 @@ package CairoX::Sweet::Path;
 
 # ABSTRACT: Handles a path
 # AUTHORITY
-our $VERSION = '0.0200';
+our $VERSION = '0.0201';
 
 use CairoX::Sweet::Elk;
 use Type::Utils qw/enum/;

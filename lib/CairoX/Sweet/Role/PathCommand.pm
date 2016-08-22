@@ -5,7 +5,7 @@ use warnings;
 package CairoX::Sweet::Role::PathCommand;
 
 # AUTHORITY
-our $VERSION = '0.0200';
+our $VERSION = '0.0201';
 
 use Moose::Role;
 
