@@ -31,7 +31,7 @@ plugins:
 
   - +replace_plugin: TravisYML
     sudo: 1
-    perl_version: 5.10 5.14 5.18 5.22 blead
+    perl_version: 5.10 5.14 5.18 5.22
     post_before_install: sudo apt-get install libcairo2-dev
     pre_install: cpanm Cairo
 
