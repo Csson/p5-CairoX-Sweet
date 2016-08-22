@@ -7,16 +7,18 @@ header:
 prereqs:
   runtime:
     requires:
-      - perl: 5.014000
+      - perl: 5.010000
+      - Moose
+      - MooseX::AttributeShortcuts: 0.028
       - MooseX::StrictConstructor
-      - List::AllUtils
+      - List::Util
+      - List::SomeUtils: 0.53
       - Eponymous::Hash
-      - Moose: 2.0000
-      - Moops: 0.034
       - Path::Tiny
-      - Type::Tiny: 1.000000
+      - Type::Tiny
       - Types::Path::Tiny
       - Cairo: 1.000
+      - namespace::autoclean
   test:
     requires:
       - Test::Requires: 0.08
@@ -27,18 +29,22 @@ plugins:
   - +extend_plugin: Git::GatherDir
     exclude_match: \.png
 
-  - +add_plugin: TravisYML
-    +before: Git::Tag
+  - +replace_plugin: TravisYML
     perl_version: 5.16
     post_before_install: sudo apt-get install libcairo2-dev
     pre_install: cpanm Cairo
-
-  - +plugin: MetaProvides::FromFile
-    file: meta.ini
 
 ---
 doctype: weaver
 
 plugins:
   - +config: Author::CSSON
-  - +remove_plugin: Splint
+
+---
+doctype: cpanfile
+
+---
+doctype: gitignore
+config: Author::CSSON
+always:
+ - CairoX-Sweet-*
