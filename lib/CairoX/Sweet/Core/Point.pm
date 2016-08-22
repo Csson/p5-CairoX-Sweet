@@ -1,31 +1,38 @@
-use 5.14.0;
+use 5.10.0;
 use strict;
 use warnings;
-use CairoX::Sweet::Standard;
 
+package CairoX::Sweet::Core::Point;
+
+# ABSTRACT: Defines a point
+# AUTHORITY
 # VERSION
-# PODNAME: CairoX::Sweet::Core::Point
 
-class CairoX::Sweet::Core::Point using Moose {
+use CairoX::Sweet::Elk;
+use Types::Standard -types;
 
-    has x => (
-        is => 'rw',
-        isa => Num,
-        required => 1,
-    );
-    has y => (
-        is => 'rw',
-        isa => Num,
-        required => 1,
-    );
+has x => (
+    is => 'rw',
+    isa => Num,
+    required => 1,
+);
+has y => (
+    is => 'rw',
+    isa => Num,
+    required => 1,
+);
 
-    method out {
-        return ($self->x, $self->y);
-    }
-    method move(:$x = 0, :$y = 0) {
-        $self->x($self->x + $x);
-        $self->y($self->y + $y);
-    }
+sub out {
+    my $self = shift;
+    return ($self->x, $self->y);
+}
+sub move {
+    my $self = shift;
+    my %params = @_;
+    my $x = $params{'x'} || 0;
+    my $y = $params{'y'} || 0;
+    $self->x($self->x + $x);
+    $self->y($self->y + $y);
 }
 
 1;

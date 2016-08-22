@@ -1,33 +1,37 @@
-use 5.14.0;
+use 5.10.0;
 use strict;
 use warnings;
-use CairoX::Sweet::Standard;
 
 # PODCLASSNAME
 
-class CairoX::Sweet::Color using Moose {
+package CairoX::Sweet::Color;
 
-    # VERSION
+# AUTHORITY
+# VERSION
 
-    foreach my $color (qw/red green blue/) {
-        has $color => (
-            is => 'ro',
-            isa => NumUpToOne,
-            required => 1,
-        );
-    }
-    has opacity => (
+use CairoX::Sweet::Elk;
+use Types::CairoX::Sweet -types;
+
+foreach my $color (qw/red green blue/) {
+    has $color => (
         is => 'ro',
-        default => 1,
         isa => NumUpToOne,
+        required => 1,
     );
+}
+has opacity => (
+    is => 'ro',
+    default => 1,
+    isa => NumUpToOne,
+);
 
-    method color {
-        return ($self->red, $self->green, $self->blue);
-    }
-    method color_with_opacity {
-        return ($self->red, $self->green, $self->blue, $self->opacity);
-    }
+sub color {
+    my $self = shift;
+    return ($self->red, $self->green, $self->blue);
+}
+sub color_with_opacity {
+    my $self = shift;
+    return ($self->red, $self->green, $self->blue, $self->opacity);
 }
 
 1;

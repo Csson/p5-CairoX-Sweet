@@ -1,143 +1,170 @@
-use 5.14.0;
+use 5.10.0;
 use strict;
 use warnings;
-use CairoX::Sweet::Standard;
 
-# PODCLASSNAME
+package CairoX::Sweet::Path;
 
-class CairoX::Sweet::Path using Moose {
+# ABSTRACT: Handles a path
+# AUTHORITY
+# VERSION
 
-    # VERSION
-    # ABSTRACT: Handles a path
+use CairoX::Sweet::Elk;
+use Type::Utils qw/enum/;
+use CairoX::Sweet::Core::LineTo;
+use Types::CairoX::Sweet -types;
+use Types::Standard qw/Maybe Num ArrayRef/;
 
-    use Type::Utils qw/enum/;
-    use CairoX::Sweet::Core::LineTo;
+has move => (
+    is => 'rw',
+    isa => Maybe[MoveTo],
+    predicate => 1,
+    coerce => 1,
+);
+has start => (
+    is => 'rw',
+    isa => Maybe[MoveTo],
+    predicate => 1,
+    coerce => 1,
+);
+has color => (
+    is => 'rw',
+    isa => Maybe[Color],
+    coerce => 1,
+    predicate => 1,
+);
+has background_color => (
+    is => 'rw',
+    isa => Maybe[Color],
+    coerce => 1,
+    predicate => 1,
+);
+has width => (
+    is => 'rw',
+    isa => Maybe[Num],
+    predicate => 1,
+);
+has cap => (
+    is => 'rw',
+    isa => enum([qw/butt round square/]),
+    default => 'butt',
+);
+has join => (
+    is => 'rw',
+    isa => enum([qw/miter round bevel/]),
+    default => 'miter',
+);
+has commands => (
+    is => 'rw',
+    isa => ArrayRef,
+    traits => ['Array'],
+    handles => {
+        add_command => 'push',
+        all_commands => 'elements',
+        get_command => 'get',
+        count_commands => 'count',
+    },
+);
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+    my %args = @_;
 
-    has move => (
-        is => 'rw',
-        isa => Maybe[MoveTo],
-        predicate => 1,
-        coerce => 1,
-    );
-    has start => (
-        is => 'rw',
-        isa => Maybe[MoveTo],
-        predicate => 1,
-        coerce => 1,
-    );
-    has color => (
-        is => 'rw',
-        isa => Maybe[Color],
-        coerce => 1,
-        predicate => 1,
-    );
-    has background_color => (
-        is => 'rw',
-        isa => Maybe[Color],
-        coerce => 1,
-        predicate => 1,
-    );
-    has width => (
-        is => 'rw',
-        isa => Maybe[Num],
-        predicate => 1,
-    );
-    has cap => (
-        is => 'rw',
-        isa => enum([qw/butt round square/]),
-        default => 'butt',
-    );
-    has join => (
-        is => 'rw',
-        isa => enum([qw/miter round bevel/]),
-        default => 'miter',
-    );
-    has commands => (
-        is => 'rw',
-        isa => ArrayRef,
-        traits => ['Array'],
-        handles => {
-            add_command => 'push',
-            all_commands => 'elements',
-            get_command => 'get',
-            count_commands => 'count',
-        },
-    );
-    around BUILDARGS($orig: $self, @args) {
-        my %args = @args;
-        if(exists $args{'start'}) {
-            $args{'start'} = CairoX::Sweet::Core::MoveTo->new(@{ $args{'start'} }, is_relative => 0);
-        }
-        elsif(exists $args{'move'}) {
-            $args{'move'} = CairoX::Sweet::Core::MoveTo->new(@{ $args{'move'} }, is_relative => 1);
-        }
-        $self->$orig(%args);
+    if(exists $args{'start'}) {
+        $args{'start'} = CairoX::Sweet::Core::MoveTo->new(@{ $args{'start'} }, is_relative => 0);
     }
-    method BUILD {
-        if($self->has_start) {
-            $self->add_command($self->start);
-        }
-        elsif($self->has_move) {
-            $self->add_command($self->move);
-        }
+    elsif(exists $args{'move'}) {
+        $args{'move'} = CairoX::Sweet::Core::MoveTo->new(@{ $args{'move'} }, is_relative => 1);
     }
-    around color, background_color($orig: $self, @args) {
-        if(scalar @args == 3) {
-            $self->$orig(\@args);
-        }
-        else {
-            $self->$orig(@args);
-        }
-    }
-    method purge {
-        $self->commands([]);
-    }
+    $self->$orig(%args);
+};
+sub BUILD {
+    my $self = shift;
 
-    method my $add_move($is_relative, @values) {
-        while(scalar @values >= 2) {
-            $self->add_command(CairoX::Sweet::Core::MoveTo->new(splice(@values, 0, 2), is_relative => $is_relative));
-        }
-        return $self;
+    if($self->has_start) {
+        $self->add_command($self->start);
     }
-    method add_start(@values) {
-        return $self->$add_move(0, @values);
+    elsif($self->has_move) {
+        $self->add_command($self->move);
     }
-    method add_move(@values) {
-        return $self->$add_move(1, @values);
-    }
+}
+around qw/color background_color/ => sub {
+    my $orig = shift;
+    my $self = shift;
 
-    method my $add_line($is_relative, @values) {
-        while(scalar @values >= 2) {
-            $self->add_command(CairoX::Sweet::Core::LineTo->new(splice(@values, 0, 2), is_relative => $is_relative));
-        }
-        return $self;
+    if(scalar @_ == 3) {
+        $self->$orig(\@_);
     }
-    method add_line(@values) {
-        return $self->$add_line(0, @values);
+    else {
+        $self->$orig(@_);
     }
-    method add_relative_line(@values) {
-        return $self->$add_line(1, @values);
-    }
+};
+sub purge {
+    my $self = shift;
+    $self->commands([]);
+}
 
-    method add_curve(@values) {
-        while(scalar @values >= 6) {
-            $self->add_command(CairoX::Sweet::Core::CurveTo->new(splice(@values, 0,6), is_relative => 0));
-        }
-        return $self;
-    }
-    method add_relative_curve(@values) {
-        while(scalar @values >= 6) {
-            $self->add_command(CairoX::Sweet::Core::CurveTo->new(splice(@values, 0, 6), is_relative => 1));
-        }
-        return $self;
-    }
+sub _add_move {
+    my $self = shift;
+    my $is_relative = shift;
+    my @values = @_;
 
-    method move_path(Num :$x = 0, Num :$y = 0) {
-        return if !defined $x && !defined $y;
+    while(scalar @values >= 2) {
+        $self->add_command(CairoX::Sweet::Core::MoveTo->new(splice(@values, 0, 2), is_relative => $is_relative));
+    }
+    return $self;
+}
+sub add_start {
+    my $self = shift;
+    return $self->_add_move(0, @_);
+}
+sub add_move {
+    my $self = shift;
+    return $self->_add_move(1, @_);
+}
 
-        foreach my $command ($self->all_commands) {
-            $command->move_location(x => $x, y => $y);
-        }
+sub _add_line_helper {
+    my $self = shift;
+    my $is_relative = shift;
+
+    while(scalar @_ >= 2) {
+        $self->add_command(CairoX::Sweet::Core::LineTo->new(splice(@_, 0, 2), is_relative => $is_relative));
+    }
+    return $self;
+}
+sub add_line {
+    my $self = shift;
+    return $self->_add_line_helper(0, @_);
+}
+sub add_relative_line {
+    my $self = shift;
+    return $self->_add_line_helper(1, @_);
+}
+
+sub add_curve {
+    my $self = shift;
+
+    while(scalar @_ >= 6) {
+        $self->add_command(CairoX::Sweet::Core::CurveTo->new(splice(@_, 0,6), is_relative => 0));
+    }
+    return $self;
+}
+sub add_relative_curve {
+    my $self = shift;
+
+    while(scalar @_ >= 6) {
+        $self->add_command(CairoX::Sweet::Core::CurveTo->new(splice(@_, 0, 6), is_relative => 1));
+    }
+    return $self;
+}
+
+sub move_path {
+    my $self = shift;
+    my %params = @_;
+    my $x = $params{'x'} || 0;
+    my $y = $params{'y'} || 0;
+
+    foreach my $command ($self->all_commands) {
+        $command->move_location(x => $x, y => $y);
     }
 }
 

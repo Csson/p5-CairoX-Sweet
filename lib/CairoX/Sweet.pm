@@ -1,119 +1,147 @@
-use 5.14.0;
+use 5.10.0;
 use strict;
 use warnings;
-use CairoX::Sweet::Standard;
 
-# PODCLASSNAME
+package CairoX::Sweet;
 
-class CairoX::Sweet using Moose {
+# ABSTRACT: Wraps Cairo for easier drawing
+# AUTHORITY
+# VERSION
 
-    # VERSION
-    # ABSTRACT: Wraps Cairo for easier drawing
+use CairoX::Sweet::Elk;
+use Cairo;
+use Types::Path::Tiny qw/AbsPath/;
+use CairoX::Sweet::Color;
+use CairoX::Sweet::Path;
+use CairoX::Sweet::Core::CurveTo;
+use CairoX::Sweet::Core::LineTo;
+use CairoX::Sweet::Core::MoveTo;
+use Types::CairoX::Sweet -types;
+use Types::Standard qw/Str Int Maybe/;
 
-    use Cairo;
-    use Type::Utils qw/enum/;
-    use Types::Path::Tiny qw/AbsPath/;
-    use CairoX::Sweet::Color;
-    use CairoX::Sweet::Path;
-    use CairoX::Sweet::Core::CurveTo;
-    use CairoX::Sweet::Core::LineTo;
-    use CairoX::Sweet::Core::MoveTo;
+has surface_format => (
+    is => 'ro',
+    isa => Str,
+);
+has width => (
+    is => 'ro',
+    isa => Int,
+    required => 1,
+);
+has height => (
+    is => 'ro',
+    isa => Int,
+    required => 1,
+);
+has background_color => (
+    is => 'ro',
+    isa => Maybe[Color],
+    predicate => 1,
+    coerce => 1,
+);
+has filename => (
+    is => 'rw',
+    isa => Maybe[AbsPath],
+    coerce => 1,
+);
+has c => (
+    is => 'ro',
+    isa => CairoContext,
+);
+has surface => (
+    is => 'ro',
+    isa => CairoSurface,
+);
 
-    has surface_format => (
-        is => 'ro',
-        isa => Str,
-    );
-    has width => (
-        is => 'ro',
-        isa => Int,
-        required => 1,
-    );
-    has height => (
-        is => 'ro',
-        isa => Int,
-        required => 1,
-    );
-    has background_color => (
-        is => 'ro',
-        isa => Maybe[Color],
-        predicate => 1,
-        coerce => 1,
-    );
-    has filename => (
-        is => 'rw',
-        isa => Maybe[AbsPath],
-        coerce => 1,
-    );
-    has c => (
-        is => 'ro',
-        isa => CairoContext,
-    );
-    has surface => (
-        is => 'ro',
-        isa => CairoSurface,
-    );
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $self = shift;
+    my $width = shift;
+    my $height = shift;
+    my %args = @_;
 
-    around BUILDARGS($orig: $self, Int $width, Int $height, @args) {
-        my %args = @args;
+    $args{'width'} = $width;
+    $args{'height'} = $height;
+    $args{'surface_format'} = 'argb32' if !exists $args{'surface_format'};
+    $args{'surface'} = Cairo::ImageSurface->create($args{'surface_format'}, $args{'width'}, $args{'height'}) if !exists $args{'surface'};
+    $args{'c'} = $args{'context'} // $args{'c'} // Cairo::Context->create($args{'surface'});
+    delete $args{'context'};
 
-        $args{'width'} = $width;
-        $args{'height'} = $height;
-        $args{'surface_format'} = 'argb32' if !exists $args{'surface_format'};
-        $args{'surface'} = Cairo::ImageSurface->create($args{'surface_format'}, $args{'width'}, $args{'height'}) if !exists $args{'surface'};
-        $args{'c'} = $args{'context'} // $args{'c'} // Cairo::Context->create($args{'surface'});
-        delete $args{'context'};
+    $self->$orig(%args);
+};
 
-        $self->$orig(%args);
-    }
+sub BUILD {
+    my $self = shift;
 
-    method BUILD {
-        if($self->has_background_color) {
-            $self->c->rectangle(0, 0, $self->width, $self->height);
-            $self->c->set_source_rgb($self->background_color->color);
-            $self->c->fill;
-        }
-    }
-    method new_svg($class: Int $width!, Int $height!, AbsPath $filename! does coerce, @args) {
-        my %args = @args;
-        $args{'surface'} = Cairo::SvgSurface->create($filename, $width, $height);
-        $args{'filename'} = $filename;
-        return $class->new($width, $height, %args);
-    }
-
-    method add_path(Path $path, Bool :$close = 0
-    ) {
-        if($path->has_background_color) {
-            foreach my $command ($path->all_commands) {
-                my $method = $command->method;
-                $self->c->$method($command->out);
-            }
-            $self->c->set_source_rgb($path->background_color->color);
-            $self->c->fill;
-        }
-        if(($path->has_background_color && $path->has_color) || !$path->has_background_color) {
-            foreach my $command ($path->all_commands) {
-                my $method = $command->method;
-                $self->c->$method($command->out);
-            }
-            $self->c->set_line_cap($path->cap);
-            $self->c->set_line_join($path->join);
-            $self->c->set_source_rgb($path->color->color) if $path->has_color;
-            $self->c->set_line_width($path->width) if $path->has_width;
-            $self->c->close_path if $close;
-            $self->c->stroke;
-        }
-    }
-
-    method add_text(Num :$x, Num :$y, Color :$color does coerce, Str :$text!, ArrayRef[Str] :$font_face = [], Num  :$font_size, Enum[qw/normal italic oblique/] :$slant = 'normal',  Enum[qw/normal bold/] :$weight = 'normal') {
-        $self->c->select_font_face(@{ $font_face }, $slant, $weight) if scalar @$font_face;
-        $self->c->set_font_size($font_size) if defined $font_size;
-        $self->c->set_source_rgb($color->color) if defined $color;
-        $self->c->move_to($x, $y)               if defined $x && defined $y;
-
-        $self->c->show_text($text);
+    if($self->has_background_color) {
+        $self->c->rectangle(0, 0, $self->width, $self->height);
+        $self->c->set_source_rgb($self->background_color->color);
         $self->c->fill;
-
     }
+}
+sub new_svg {
+    my $class = shift;
+    my $width = shift;
+    my $height = shift;
+    my $filename = AbsPath->coerce(shift);
+    my %args = @_;
+
+    $args{'surface'} = Cairo::SvgSurface->create($filename, $width, $height);
+    $args{'filename'} = $filename;
+    return $class->new($width, $height, %args);
+}
+
+sub add_path {
+
+    my $self = shift;
+    my $path = shift; # CairoX::Sweet::Path
+    my %options = @_;
+    my $close = $options{'close'} || 0;
+
+    if($path->has_background_color) {
+        foreach my $command ($path->all_commands) {
+            my $method = $command->method;
+            $self->c->$method($command->out);
+        }
+        $self->c->set_source_rgb($path->background_color->color);
+        $self->c->fill;
+    }
+    if(($path->has_background_color && $path->has_color) || !$path->has_background_color) {
+        foreach my $command ($path->all_commands) {
+            my $method = $command->method;
+            $self->c->$method($command->out);
+        }
+        $self->c->set_line_cap($path->cap);
+        $self->c->set_line_join($path->join);
+        $self->c->set_source_rgb($path->color->color) if $path->has_color;
+        $self->c->set_line_width($path->width) if $path->has_width;
+        $self->c->close_path if $close;
+        $self->c->stroke;
+    }
+}
+
+sub add_text {
+    my $self = shift;
+    my %args = @_;
+
+    my $text = $args{'text'};
+    my $x = $args{'x'};
+    my $y = $args{'y'};
+    my $color = shift;
+    $color = Color->check($color) ? $color : Color->coerce($color);
+    my $font_face = $args{'font_face'} || [];
+    my $font_size = shift;
+    my $slant = $args{'slant'} || 'normal'; # normal italic oblique
+    my $weight = $args{'weight'} || 'normal'; # normal bold
+
+
+    $self->c->select_font_face(@{ $font_face }, $slant, $weight) if scalar @$font_face;
+    $self->c->set_font_size($font_size) if defined $font_size;
+    $self->c->set_source_rgb($color->color) if defined $color;
+    $self->c->move_to($x, $y)               if defined $x && defined $y;
+
+    $self->c->show_text($text);
+    $self->c->fill;
 
 }
 

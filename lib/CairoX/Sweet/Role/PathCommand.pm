@@ -1,13 +1,17 @@
-use CairoX::Sweet::Standard;
+use 5.10.0;
 use strict;
 use warnings;
 
-# PODCLASSNAME
+package CairoX::Sweet::Role::PathCommand;
 
-role CairoX::Sweet::Role::PathCommand using Moose {
+# AUTHORITY
+# VERSION
 
-    # VERSION
-    requires 'location', 'move_location';
-}
+use Moose::Role;
+
+requires qw/
+    location
+    move_location
+/;
 
 1;

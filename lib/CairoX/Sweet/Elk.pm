@@ -11,10 +11,9 @@ package CairoX::Sweet::Elk;
 use Moose();
 use MooseX::AttributeShortcuts();
 use namespace::autoclean();
-use List::Util();
 use Moose::Exporter;
 
-Moose::Exporter->setup_import_methods(also => ['Moose'], as_is => [\&List::Util::any, \&List::Util::sum, \&List::Util::zip]);
+Moose::Exporter->setup_import_methods(also => ['Moose']);
 
 sub init_meta {
     my $class = shift;
