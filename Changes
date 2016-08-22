@@ -14,8 +14,10 @@ Revision history for CairoX-Sweet
  [New Features]
 
  [Requirements]
+ - Remove dependency on Moops.
+ - Lower Perl compatibility to 5.10.
 
- [Revision]
+ [Other Changes]
 
  [Testing]
 
