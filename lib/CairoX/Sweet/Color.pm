@@ -7,7 +7,7 @@ use warnings;
 package CairoX::Sweet::Color;
 
 # AUTHORITY
-# VERSION
+our $VERSION = '0.0200';
 
 use CairoX::Sweet::Elk;
 use Types::CairoX::Sweet -types;

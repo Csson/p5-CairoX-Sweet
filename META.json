@@ -257,7 +257,6 @@
          {
             "class" : "Dist::Zilla::Plugin::RewriteVersion::Transitional",
             "config" : {
-               "Dist::Zilla::Plugin::OurPkgVersion" : {},
                "Dist::Zilla::Plugin::RewriteVersion" : {
                   "add_tarball_name" : 0,
                   "finders" : [

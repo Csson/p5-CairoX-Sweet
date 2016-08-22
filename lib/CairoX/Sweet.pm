@@ -6,7 +6,7 @@ package CairoX::Sweet;
 
 # ABSTRACT: Wraps Cairo for easier drawing
 # AUTHORITY
-# VERSION
+our $VERSION = '0.0200';
 
 use CairoX::Sweet::Elk;
 use Cairo;

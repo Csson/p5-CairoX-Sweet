@@ -5,7 +5,7 @@ use warnings;
 package Types::CairoX::Sweet;
 
 # AUTHORITY
-# VERSION
+our $VERSION = '0.0200';
 
 use Type::Library -base,
                   -declare => qw/

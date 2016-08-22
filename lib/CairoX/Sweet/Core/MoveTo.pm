@@ -6,7 +6,7 @@ package CairoX::Sweet::Core::MoveTo;
 
 # ABSTRACT: Make a move_to
 # AUTHORITY
-# VERSION
+our $VERSION = '0.0200';
 
 use CairoX::Sweet::Elk;
 use CairoX::Sweet::Core::Point;

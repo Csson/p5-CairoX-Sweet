@@ -6,7 +6,7 @@ package CairoX::Sweet::Core::Point;
 
 # ABSTRACT: Defines a point
 # AUTHORITY
-# VERSION
+our $VERSION = '0.0200';
 
 use CairoX::Sweet::Elk;
 use Types::Standard -types;
