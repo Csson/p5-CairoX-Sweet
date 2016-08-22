@@ -4,10 +4,7 @@ use Test::More;
 use if $ENV{'AUTHOR_TESTING'}, 'Test::Warnings';
 
 use Test::Requires qw(Cairo);
-
-BEGIN {
-    use_ok 'CairoX::Sweet';
-}
+use CairoX::Sweet;
 
 my $color = CairoX::Sweet::Color->new(red => 0, green => 0.5, blue => 0.75);
 
